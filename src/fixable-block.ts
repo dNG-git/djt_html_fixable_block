@@ -89,10 +89,13 @@ export class FixableBlock extends RiotTag {
 
         if (!this.fixatorInstance) {
             // tslint:disable-next-line:no-any
-            const options: any = { isExternalTriggered: true };
+            const options: any = {
+                fixedClass: this.riotTagInstance.opts.fixedClass,
+                isExternalTriggered: true
+            };
 
             if ('maximizeIfFixed' in this.riotTagInstance.opts) {
-                options['maximizeIfFixed'] = this.riotTagInstance.opts.maximizeIfFixed;
+                options['maximizeIfFixed'] = parseInt(this.riotTagInstance.opts.maximizeIfFixed, 10);
             }
 
             this.fixatorInstance = new Fixator(this.riotTagInstance.root, options);

@@ -114,7 +114,7 @@ export class Fixator {
             this.fixedClass = opts.fixedClass;
         }
 
-        this.isMaximizedIfFixed = Boolean(parseInt(opts.maximizeIfFixed, 10));
+        this.isMaximizedIfFixed = Boolean(opts.maximizeIfFixed);
 
         this.eventId = 'djt-fixable-block-event-listener-' + Math.random().toString().replace('.', '');
         this.$node = $(element);
