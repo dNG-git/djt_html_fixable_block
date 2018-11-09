@@ -16,30 +16,30 @@
         "install-clean": "npm install --no-save",
         "update-clean": "npm update --no-save",
         "build": "npm run build-lib && npm run build-dist",
-        "build-dist": "npm run build-dist:css && npm run build-dist:js",
+        "build-dist": "npm run build-dist:css && npm run build-dist:es5 && npm run build-dist:module",
         "build-dist:css": "./node_modules/.bin/postcss src/fixable-block.scss -o dist/djt-xhtml5-fixable-block.css -m",
-        "build-dist:js": "./node_modules/.bin/rollup -c",
+        "build-dist:es5": "./node_modules/.bin/rollup -c rollup.config-es5.js",
+        "build-dist:module": "./node_modules/.bin/rollup -c",
         "build-lib": "npm run build-lib:es6 && npm run build-lib:cjs",
         "build-lib:es6": "./node_modules/.bin/tsc",
         "build-lib:cjs": "./node_modules/.bin/tsc -p tsconfig.cjs.json",
         "prepare": "npm run build-lib"
     },
     "dependencies": {
-        "djt-xhtml5-riot-tag": "git://github.com/dNG-git/djt_xhtml5_riot_tag.git#semver:^2.1.1"
+        "djt-xhtml5-riot-tag": "git://github.com/dNG-git/djt_xhtml5_riot_tag.git#semver:^2.1.2"
     },
     "devDependencies": {
-        "autoprefixer": "^9.2.0",
-        "cssnano": "^4.1.4",
-        "postcss-cli": "^6.0.0",
+        "autoprefixer": "^9.3.1",
+        "cssnano": "^4.1.7",
+        "postcss-cli": "^6.0.1",
         "postcss-node-sass": "^2.1.7",
         "rollup": "^0.66.6",
         "rollup-plugin-commonjs": "^9.2.0",
         "rollup-plugin-node-resolve": "^3.4.0",
-        "rollup-plugin-typescript2": "^0.17.1",
-        "rollup-plugin-uglify": "^6.0.0",
+        "rollup-plugin-terser": "^3.0.0",
+        "rollup-plugin-typescript2": "^0.17.2",
         "tslint": "^5.11.0",
-        "typescript": "^3.1.3",
-        "uglify-es": "^3.3.9",
+        "typescript": "^3.1.4",
         "@types/riot": "^3.6.1",
         "@types/zepto": "^1.0.30"
     }
