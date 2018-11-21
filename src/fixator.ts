@@ -30,15 +30,15 @@ export class Fixator {
     /**
      * Update CSS because of a size change
      */
-    protected static readonly UPDATE_CSS_TRIGGER_SIZE_CHANGED = 1;
+    protected static readonly UPDATE_CSS_TRIGGER_SIZE_CHANGED = 1 << 0;
     /**
      * Update CSS because the fixed state changed
      */
-    protected static readonly UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED = 2;
+    protected static readonly UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED = 1 << 1;
     /**
      * Update CSS because the hidden state of the fixed node changed
      */
-    protected static readonly UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED = 4;
+    protected static readonly UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED = 1 << 2;
 
     /**
      * List of activated (but maybe hidden) fixed elements
@@ -273,7 +273,7 @@ export class Fixator {
     }
 
     /**
-     * Initialzes the cached node metrics and the dummy node size.
+     * Initializes the cached node metrics and the dummy node size.
      *
      * @since v1.0.0
      */
@@ -284,7 +284,7 @@ export class Fixator {
     }
 
     /**
-     * Called on DOM event "scroll".
+     * Called for tag event "resize" and DOM events "xdomchanged" and "xresize".
      *
      * @param _ Event object
      *

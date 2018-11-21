@@ -67,7 +67,7 @@ export class FixableBlock extends RiotTag {
     /**
      * Called on custom DOM event "xdomchanged".
      *
-     * @param _ Event object
+     * @param event Event object
      *
      * @since v1.0.0
      */
@@ -95,7 +95,7 @@ export class FixableBlock extends RiotTag {
             };
 
             if ('maximizeIfFixed' in this.riotTagInstance.opts) {
-                options['maximizeIfFixed'] = parseInt(this.riotTagInstance.opts.maximizeIfFixed, 10);
+                options['maximizeIfFixed'] = FixableBlock.getValueAsNumber(this.riotTagInstance.opts.maximizeIfFixed);
             }
 
             this.fixatorInstance = new Fixator(this.riotTagInstance.root, options);
