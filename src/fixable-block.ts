@@ -120,7 +120,7 @@ export class FixableBlock extends RiotTag {
     }
 
     /**
-     * riotjs.com: The style for the tag
+     * riot.js.org: The style for the tag
      *
      * @return CSS style rules
      * @since  v1.0.0
@@ -132,7 +132,7 @@ djt-fixable-block { display: block }
     }
 
     /**
-     * riotjs.com: The tag name
+     * riot.js.org: The tag name
      *
      * @return Riot.js custom tag name
      * @since  v1.0.0
@@ -142,7 +142,7 @@ djt-fixable-block { display: block }
     }
 
     /**
-     * riotjs.com: The layout with expressions
+     * riot.js.org: The layout with expressions
      *
      * @return Layout template
      * @since  v1.0.0
