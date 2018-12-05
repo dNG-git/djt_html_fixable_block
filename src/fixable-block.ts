@@ -14,8 +14,7 @@
  * @license Mozilla Public License, v. 2.0
  */
 
-import { RiotTag } from 'djt-xhtml5-riot-tag';
-import { Tag, TagOpts } from 'riot';
+import { DomUtilities, riot, RiotTag } from 'djt-xhtml5-riot-tag';
 
 import { Fixator } from './fixator';
 
@@ -43,7 +42,7 @@ export class FixableBlock extends RiotTag {
      *
      * @since v1.0.0
      */
-    constructor(riotTagInstance: Tag, opts?: TagOpts) {
+    constructor(riotTagInstance: riot.Tag, opts?: riot.TagOpts) {
         super(riotTagInstance, opts);
 
         this.isElementSizeRelevant = true;
@@ -65,21 +64,6 @@ export class FixableBlock extends RiotTag {
     }
 
     /**
-     * Called on custom DOM event "xdomchanged".
-     *
-     * @param event Event object
-     *
-     * @since v1.0.0
-     */
-    public onDomChanged(event: Event) {
-        super.onDomChanged(event);
-
-        if (this.fixatorInstance) {
-            this.fixatorInstance.onResize();
-        }
-    }
-
-    /**
      * Called for tag event "mount".
      *
      * @since v1.0.0
@@ -95,24 +79,20 @@ export class FixableBlock extends RiotTag {
             };
 
             if ('maximizeIfFixed' in this.riotTagInstance.opts) {
-                options['maximizeIfFixed'] = FixableBlock.getValueAsNumber(this.riotTagInstance.opts.maximizeIfFixed);
+                options['maximizeIfFixed'] = DomUtilities.getValueAsNumber(this.riotTagInstance.opts.maximizeIfFixed);
             }
 
             this.fixatorInstance = new Fixator(this.riotTagInstance.root, options);
         }
-
-        this.on('resize', this.fixatorInstance.onResize);
     }
 
     /**
-     * Called on DOM event "resize".
-     *
-     * @param event Event object
+     * Updates the underlying tag element size.
      *
      * @since v1.0.0
      */
-    public onWindowResized(event: Event) {
-        super.onWindowResized(event);
+    protected updateTagSize() {
+        super.updateTagSize();
 
         if (this.fixatorInstance) {
             this.fixatorInstance.onResize();
