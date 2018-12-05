@@ -20,6 +20,7 @@ const path = require('path');
 const PostcssNodeSass = require('postcss-node-sass');
 
 module.exports = {
+    syntax: 'postcss-scss',
     plugins: [
         PostcssNodeSass({ includePaths: [ path.resolve('./node_modules/') ] }),
         AutoPrefixer(),

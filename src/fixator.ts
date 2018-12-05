@@ -14,6 +14,8 @@
  * @license Mozilla Public License, v. 2.0
  */
 
+import { DomUtilities } from 'djt-xhtml5-riot-tag';
+
 /**
  * The "Fixator" class supports (top) fixed block elements on scrollable
  * pages. At most one (the latest one appearing on the page while scrolling)
@@ -46,10 +48,6 @@ export class Fixator {
     protected static fixedElements: Fixator[] = [ ];
 
     // tslint:disable:no-any
-    /**
-     * Flag indicating that a DOM manipulation library is available
-     */
-    public static isDomManipulationAvailable: boolean = undefined;
     /**
      * Dummy node instance used for positioning if fixed
      */
@@ -98,11 +96,7 @@ export class Fixator {
      */
     // tslint:disable-next-line:no-any
     constructor(element: Element, opts?: any) {
-        if (this.instanceClass.isDomManipulationAvailable === undefined) {
-            this.instanceClass.validateDomManipulationSupport();
-        }
-
-        if (!this.instanceClass.isDomManipulationAvailable) {
+        if (!DomUtilities.isDomManipulationAvailable) {
             throw new Error('DOM manipulation support is required');
         }
 
@@ -201,13 +195,15 @@ export class Fixator {
 
         if (this.isFixed) {
             this.isFixed = false;
-            this.updateNodeCss(Fixator.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED);
+            const instanceClass = this.instanceClass;
 
-            this.instanceClass.fixedElements = this.instanceClass.fixedElements.filter(
+            this.updateNodeCss(instanceClass.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED);
+
+            instanceClass.fixedElements = instanceClass.fixedElements.filter(
                 (instance: Fixator) => instance !== this
             );
 
-            if (this.instanceClass.fixedElements.length > 0) {
+            if (instanceClass.fixedElements.length > 0) {
                 $(this.element).trigger('xdomchanged');
             }
         }
@@ -334,7 +330,7 @@ export class Fixator {
         this.updateFixedState();
 
         if (isFixed && this.isFixed && isNodeSizeChanged) {
-            this.updateNodeCss(Fixator.UPDATE_CSS_TRIGGER_SIZE_CHANGED);
+            this.updateNodeCss(this.instanceClass.UPDATE_CSS_TRIGGER_SIZE_CHANGED);
         }
     }
 
@@ -348,14 +344,15 @@ export class Fixator {
             this.initMetricsAndDummyNode();
         }
 
+        const instanceClass = this.instanceClass;
         const isFixed = ($(self).scrollTop() > this.metrics.top);
 
         const isFixedButHidden = (
             isFixed
             && (
-                this.instanceClass.fixedElements.length > 0
-                && this.instanceClass.fixedElements[0] !== this
-                && this.instanceClass.fixedElements.indexOf(this) > 0
+                instanceClass.fixedElements.length > 0
+                && instanceClass.fixedElements[0] !== this
+                && instanceClass.fixedElements.indexOf(this) > 0
             )
         );
 
@@ -364,10 +361,10 @@ export class Fixator {
         if (isFixed) {
             if ((!this.isFixed) || (isFixedButHidden !== this.isFixedButHidden)) {
                 if (!this.isFixed) {
-                    triggers |= Fixator.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED;
-                    this.instanceClass.fixedElements.unshift(this);
+                    triggers |= instanceClass.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED;
+                    instanceClass.fixedElements.unshift(this);
 
-                    if (this.instanceClass.fixedElements.length > 1) {
+                    if (instanceClass.fixedElements.length > 1) {
                         $(this.element).trigger('xdomchanged');
                     }
                 }
@@ -375,20 +372,20 @@ export class Fixator {
                 this.isFixed = true;
             }
         } else if (this.isFixed) {
-            triggers |= Fixator.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED;
+            triggers |= instanceClass.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED;
             this.isFixed = false;
 
-            this.instanceClass.fixedElements = this.instanceClass.fixedElements.filter(
+            instanceClass.fixedElements = instanceClass.fixedElements.filter(
                 (instance: Fixator) => instance !== this
             );
 
-            if (this.instanceClass.fixedElements.length > 0) {
+            if (instanceClass.fixedElements.length > 0) {
                 $(this.element).trigger('xdomchanged');
             }
         }
 
         if (isFixedButHidden !== this.isFixedButHidden) {
-            triggers |= Fixator.UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED;
+            triggers |= instanceClass.UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED;
             this.isFixedButHidden = isFixedButHidden;
         }
 
@@ -410,6 +407,8 @@ export class Fixator {
         const attributes = { ...this.nodeAttributes };
 
         if (this.isFixed) {
+            const instanceClass = this.instanceClass;
+
             if (this.isMaximizedIfFixed) {
                 attributes['left'] = 0;
                 attributes['right'] = 0;
@@ -418,7 +417,7 @@ export class Fixator {
                 attributes['left'] = `${this.metrics.left}px`;
             }
 
-            if ((triggers & Fixator.UPDATE_CSS_TRIGGER_SIZE_CHANGED) == Fixator.UPDATE_CSS_TRIGGER_SIZE_CHANGED) {
+            if (triggers & instanceClass.UPDATE_CSS_TRIGGER_SIZE_CHANGED) {
                 delete attributes['position'];
                 delete attributes['top'];
             } else {
@@ -428,18 +427,12 @@ export class Fixator {
 
             if (
                 this.isFixedButHidden
-                && (
-                    (triggers & Fixator.UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED)
-                    == Fixator.UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED
-                )
+                && (triggers & instanceClass.UPDATE_CSS_TRIGGER_FIXED_HIDDEN_STATE_CHANGED)
             ) {
                 attributes['top'] = String(Math.floor(-1 * this.metrics.height)) + 'px';
             }
 
-            if (
-                (triggers & Fixator.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED)
-                == Fixator.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED
-            ) {
+            if (triggers & instanceClass.UPDATE_CSS_TRIGGER_FIXED_STATE_CHANGED) {
                 this.$dummyNode.css('display', 'block');
                 this.$node.addClass(this.fixedClass);
             }
@@ -449,14 +442,5 @@ export class Fixator {
         }
 
         this.$node.css(attributes);
-    }
-
-    /**
-     * Validates if a DOM manipulation library is available.
-     *
-     * @since v1.0.0
-     */
-    protected static validateDomManipulationSupport() {
-        this.isDomManipulationAvailable = (typeof $ != 'undefined');
     }
 }
