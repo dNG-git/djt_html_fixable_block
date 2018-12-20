@@ -7,7 +7,7 @@ The direct JavaScript Toolbox of the direct Netware Group contain different
 modules. Each represents one aspect, feature or provides the base
 functionality for other modules.
 
-"djt-xhtml5-fixable-block" implements a module for an fixable block tag and
+"djt-html-fixable-block" implements a module for an fixable block tag and
 mixin.
 
 ----------------------------------------------------------------------------

@@ -3,7 +3,7 @@
  * All-in-one toolbox to provide more reusable JavaScript features
  *
  * (C) direct Netware Group - All rights reserved
- * https://www.direct-netware.de/redirect?djt;xhtml5;fixable_block
+ * https://www.direct-netware.de/redirect?djt;html;fixable_block
  *
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -14,7 +14,7 @@
  * @license Mozilla Public License, v. 2.0
  */
 
-import { DomUtilities, riot, RiotTag } from 'djt-xhtml5-riot-tag';
+import { DomUtilities, riot, RiotTag } from 'djt-html-riot-tag';
 
 import { Fixator } from './fixator';
 
@@ -23,7 +23,7 @@ import { Fixator } from './fixator';
  *
  * @author    direct Netware Group
  * @copyright (C) direct Netware Group - All rights reserved
- * @package   djt-xhtml5-fixable-block
+ * @package   djt-html-fixable-block
  * @since     v1.0.0
  * @license   https://www.direct-netware.de/redirect?licenses;mpl2
  *            Mozilla Public License, v. 2.0
@@ -106,9 +106,7 @@ export class FixableBlock extends RiotTag {
      * @since  v1.0.0
      */
     protected static get css() {
-        return `
-djt-fixable-block { display: block }
-        `;
+        return 'djt-fixable-block { display: block }';
     }
 
     /**
@@ -128,6 +126,6 @@ djt-fixable-block { display: block }
      * @since  v1.0.0
      */
     protected static get tmpl() {
-        return `<yield>`;
+        return '<yield>';
     }
 }

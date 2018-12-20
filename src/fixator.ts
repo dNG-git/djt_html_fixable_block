@@ -3,7 +3,7 @@
  * All-in-one toolbox to provide more reusable JavaScript features
  *
  * (C) direct Netware Group - All rights reserved
- * https://www.direct-netware.de/redirect?djt;xhtml5;fixable_block
+ * https://www.direct-netware.de/redirect?djt;html;fixable_block
  *
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -14,7 +14,7 @@
  * @license Mozilla Public License, v. 2.0
  */
 
-import { DomUtilities } from 'djt-xhtml5-riot-tag';
+import { DomUtilities } from 'djt-html-riot-tag';
 
 /**
  * The "Fixator" class supports (top) fixed block elements on scrollable
@@ -23,7 +23,7 @@ import { DomUtilities } from 'djt-xhtml5-riot-tag';
  *
  * @author    direct Netware Group
  * @copyright (C) direct Netware Group - All rights reserved
- * @package   djt-xhtml5-fixable-block
+ * @package   djt-html-fixable-block
  * @since     v1.0.0
  * @license   https://www.direct-netware.de/redirect?licenses;mpl2
  *            Mozilla Public License, v. 2.0
@@ -422,7 +422,7 @@ export class Fixator {
                 delete attributes['top'];
             } else {
                 attributes['position'] = 'fixed';
-                attributes['top'] = `0px`;
+                attributes['top'] = '0px';
             }
 
             if (

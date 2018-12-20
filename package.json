@@ -1,13 +1,13 @@
 {
-    "name": "djt-xhtml5-fixable-block",
+    "name": "djt-html-fixable-block",
     "license": "MPL-2.0",
-    "description": "'djt-xhtml5-fixable-block' implements a module for an fixable block tag and mixin.",
-    "homepage": "https://www.direct-netware.de/redirect?djt;xhtml5;fixable_block",
-    "version": "1.1.0",
+    "description": "'djt-html-fixable-block' implements a module for an fixable block tag and mixin.",
+    "homepage": "https://www.direct-netware.de/redirect?djt;html;fixable_block",
+    "version": "1.0.0",
     "private": true,
     "repository": {
         "type": "git",
-        "url": "https://github.com/dNG-git/djt_xhtml5_fixable_block.git"
+        "url": "https://github.com/dNG-git/djt_html_fixable_block.git"
     },
     "main": "./lib/cjs/module.js",
     "module": "./lib/module.js",
@@ -17,7 +17,7 @@
         "update-clean": "npm update --no-save",
         "build": "npm run build-lib && npm run build-dist",
         "build-dist": "npm run build-dist:css && npm run build-dist:es5 && npm run build-dist:module",
-        "build-dist:css": "./node_modules/.bin/postcss src/fixable-block.scss -o dist/djt-xhtml5-fixable-block.css -m",
+        "build-dist:css": "./node_modules/.bin/postcss src/fixable-block.scss -o dist/djt-html-fixable-block.css -m",
         "build-dist:es5": "./node_modules/.bin/rollup -c rollup.config-es5.js",
         "build-dist:module": "./node_modules/.bin/rollup -c",
         "build-lib": "npm run build-lib:es6 && npm run build-lib:cjs",
@@ -26,7 +26,7 @@
         "prepare": "npm run build-lib"
     },
     "dependencies": {
-        "djt-xhtml5-riot-tag": "git://github.com/dNG-git/djt_xhtml5_riot_tag.git#semver:^3.0.0"
+        "djt-html-riot-tag": "git://github.com/dNG-git/djt_html_riot_tag.git#semver:^1.0.0"
     },
     "devDependencies": {
         "autoprefixer": "^9.3.1",
